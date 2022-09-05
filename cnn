@@ -1,0 +1,33 @@
+def build_model():
+    # build model
+    model = Sequential()
+    
+    
+    # channels first 
+    model.add(Conv2D(32, (5, 18), strides=(1, 1), padding='same', activation='relu',
+                     kernel_initializer='he_uniform', input_shape=(256,18,3)))
+    model.add(BatchNormalization(axis=1))
+    model.add(MaxPooling2D(pool_size=(4, 1), padding='same'))
+    model.add(Dropout(0.3))
+    
+    
+    # dropout value affects different patients
+    # larger kernel size works better in 2nd layer
+    model.add(Conv2D(64, (5, 5), strides=(1, 1), padding='same', activation='relu',
+                     kernel_initializer='he_uniform'))
+    model.add(BatchNormalization(axis=1))
+    model.add(MaxPooling2D(pool_size=(2, 2), padding='same'))
+    model.add(Dropout(0.3))
+    
+    # larger kernel size works better in 3rd layer 
+    model.add(Conv2D(128, (5, 5), strides=(2, 2), padding='same', activation='relu',
+                     kernel_initializer='he_uniform'))
+    model.add(BatchNormalization(axis=1))
+    model.add(MaxPooling2D(pool_size=(2, 1), padding='same'))
+    model.add(GlobalMaxPooling2D())
+    model.add(Dropout(0.3))
+    
+    # dense layer greatly improve results 
+    model.add(Dense(10))
+    model.add(Dense(1, activation='sigmoid', kernel_initializer='he_uniform'))
+    return model
