@@ -27,7 +27,13 @@ def build_model():
     model.add(GlobalMaxPooling2D())
     model.add(Dropout(0.3))
     
-    # dense layers greatly improve results, minimise number of neuron and dense layers to reduce complexity and computation time
+    # normal dense layers greatly improve results, minimise number of neuron and dense layers to reduce complexity and computation time
     model.add(Dense(10))
     model.add(Dense(1, activation='sigmoid', kernel_initializer='he_uniform'))
     return model
+
+    # learning rate = 0.0001, smaller learning rate works much better
+    # max pooling perform better than average pooling but varies across patients
+    # pool size greatly affects model. 
+    # val recall is 0 for the first 10 epoch. 
+  
